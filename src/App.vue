@@ -27,7 +27,7 @@
                                             :src="dog"></v-img>
                                     <v-card-actions>
                                         <v-spacer></v-spacer>
-                                        <v-btn icon>
+                                        <v-btn @click="removeFromFavourites(index)" icon>
                                             <v-icon>delete</v-icon>
                                         </v-btn>
                                     </v-card-actions>
@@ -62,6 +62,9 @@
             },
             addToFavourites() {
                 this.favouriteDogs.push(this.currentDogLink)
+            },
+            removeFromFavourites(index) {
+                this.favouriteDogs.splice(index,1)
             }
         },
         created() {
