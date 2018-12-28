@@ -22,12 +22,15 @@
                         </v-card-actions>
                     </v-card>
                     <v-container grid-list-md fluid>
-                        <v-layout wrap>
+                        <transition-group
+                                name="slide"
+                                tag="v-layout"
+                                class="wrap">
                             <v-flex xs6 sm4 md2 v-for="(dog, index) in favouriteDogs" :key="dog">
                                 <Dog :dog="dog" @remove="removeFromFavourites(index)"></Dog>
 
                             </v-flex>
-                        </v-layout>
+                        </transition-group>
                     </v-container>
                 </div>
             </v-container>
@@ -117,6 +120,14 @@
     }
     .fade-enter,
     .fade-leave-to {
+        opacity: 0;
+    }
+    .slide-enter-active {
+        transition: all 0.3s ease;
+    }
+    .slide-enter,
+    .slide-leave-to {
+        transform: translateX(10px);
         opacity: 0;
     }
 </style>
