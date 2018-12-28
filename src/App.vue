@@ -1,31 +1,85 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+    <v-app>
+        <v-content class="dogs-layout">
+            <v-container fill-height>
+                <div class="dogs-overlay">
+                    <h1 class="display-2 text-xs-center">Choose your favorite dogs</h1>
+                    <v-card class="dog-card">
+                        <v-img height="400px"
+                               :src="currentDogLink"
+                        ></v-img>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn icon>
+                                <v-icon>favorite</v-icon>
+                            </v-btn>
+                            <v-btn icon>
+                                <v-icon>forward</v-icon>
+                            </v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </div>
+            </v-container>
+        </v-content>
+    </v-app>
 </template>
 
+<script>
+    import axios from 'axios'
+
+    export default {
+        data() {
+            return {
+                currentDogLink: ""
+            }
+        },
+        methods: {
+            loadNewDog(){
+                axios
+                    .get('https://dog.ceo/api/breeds/image/random')
+                    .then(response=> {
+                        this.currentDogLink = response.data.message
+                    })
+                    .catch(error=> console.log(error))
+            }
+        },
+        created() {
+            this.loadNewDog()
+        }
+    }
+</script>
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
+    img {
+        max-width: 100%;
+    }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+    h1 {
+        padding-bottom: 15px;
+    }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+    .dogs-layout {
+        width: 100%;
+        background: #fff center repeat;
+        background-image: url("https://github.com/VueVixens/projects/blob/master/petshop/images/bg3.jpg?raw=true");
+    }
+
+    .dogs-overlay {
+        width: 100%;
+        padding: 20px;
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    @media (max-width: 768px) {
+        .dogs-overlay {
+            margin: 0;
+        }
+    }
+
+    .dog-card {
+        width: 100%;
+        max-width: 600px;
+    }
 </style>
