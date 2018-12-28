@@ -130,4 +130,11 @@
         transform: translateX(10px);
         opacity: 0;
     }
+    .slide-leave-active {
+        position: absolute;
+    }
+
+    .slide-move {
+        transition: transform 0.5s;
+    }
 </style>
