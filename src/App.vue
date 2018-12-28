@@ -21,17 +21,8 @@
                     <v-container grid-list-md fluid>
                         <v-layout wrap>
                             <v-flex xs6 sm4 md2 v-for="(dog, index) in favouriteDogs" :key="dog">
-                                <v-card class="dog-card">
-                                    <v-img
-                                            height="150px"
-                                            :src="dog"></v-img>
-                                    <v-card-actions>
-                                        <v-spacer></v-spacer>
-                                        <v-btn @click="removeFromFavourites(index)" icon>
-                                            <v-icon>delete</v-icon>
-                                        </v-btn>
-                                    </v-card-actions>
-                                </v-card>
+                                <Dog :dog="dog" @remove="removeFromFavourites(index)"></Dog>
+
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -43,8 +34,12 @@
 
 <script>
     import axios from 'axios'
+    import Dog from './components/Dog.vue'
 
     export default {
+        components: {
+            Dog,
+        },
         data() {
             return {
                 currentDogLink: "",
