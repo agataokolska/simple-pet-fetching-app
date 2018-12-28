@@ -10,7 +10,7 @@
                         ></v-img>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn icon>
+                            <v-btn @click="addToFavourites" icon>
                                 <v-icon>favorite</v-icon>
                             </v-btn>
                             <v-btn @click="loadNewDog" icon>
@@ -18,6 +18,23 @@
                             </v-btn>
                         </v-card-actions>
                     </v-card>
+                    <v-container grid-list-md fluid>
+                        <v-layout wrap>
+                            <v-flex xs6 sm4 md2 v-for="(dog, index) in favouriteDogs" :key="dog">
+                                <v-card class="dog-card">
+                                    <v-img
+                                            height="150px"
+                                            :src="dog"></v-img>
+                                    <v-card-actions>
+                                        <v-spacer></v-spacer>
+                                        <v-btn icon>
+                                            <v-icon>delete</v-icon>
+                                        </v-btn>
+                                    </v-card-actions>
+                                </v-card>
+                            </v-flex>
+                        </v-layout>
+                    </v-container>
                 </div>
             </v-container>
         </v-content>
@@ -30,17 +47,21 @@
     export default {
         data() {
             return {
-                currentDogLink: ""
+                currentDogLink: "",
+                favouriteDogs: []
             }
         },
         methods: {
-            loadNewDog(){
+            loadNewDog() {
                 axios
                     .get('https://dog.ceo/api/breeds/image/random')
-                    .then(response=> {
+                    .then(response => {
                         this.currentDogLink = response.data.message
                     })
-                    .catch(error=> console.log(error))
+                    .catch(error => console.log(error))
+            },
+            addToFavourites() {
+                this.favouriteDogs.push(this.currentDogLink)
             }
         },
         created() {
